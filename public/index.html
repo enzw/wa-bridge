@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WhatsApp Bridge</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body data-theme="classic">
+  <main class="app-card">
+    <header class="app-header">
+      <h2>WhatsApp Bridge</h2>
+      <button id="settings-toggle" type="button" aria-expanded="false" aria-controls="settings-panel">Pengaturan</button>
+    </header>
+    <section id="settings-panel" class="settings-panel" aria-label="Pengaturan" style="display: none;">
+      <label for="theme-select">Tema tampilan</label>
+      <select id="theme-select">
+        <option value="classic">WhatsApp Classic</option>
+        <option value="hacker">Hacker Green</option>
+        <option value="matrix">Matrix Dark</option>
+      </select>
+    </section>
+    <section id="login-panel">
+      <p class="terminal-intro">&gt; AUTHENTICATION REQUIRED</p>
+      <form id="login-form">
+        <label for="pin-input">PIN akses</label>
+        <input id="pin-input" name="pin" type="password" inputmode="numeric" autocomplete="current-password" minlength="4" maxlength="128" required>
+        <button class="primary-button" type="submit">Masuk</button>
+        <p id="login-error" class="form-message" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+    <section id="bridge-panel" style="display: none;">
+      <p id="status">Menunggu koneksi...</p>
+      <img id="qr" alt="WhatsApp pairing QR">
+      <div id="chat-workspace" class="chat-workspace">
+        <section id="chat-list-view" class="chat-list-view">
+          <h3>Percakapan</h3>
+          <label class="visually-hidden" for="chat-search">Cari chat atau kontak</label>
+          <input id="chat-search" type="search" placeholder="Cari chat, nama, atau nomor WA (kode negara)">
+          <p id="chat-list-message" class="chat-list-message">Memuat percakapan...</p>
+          <ul id="chat-list"></ul>
+        </section>
+        <section id="chat-detail-view" class="chat-detail-view">
+          <p id="chat-empty">Pilih percakapan untuk melihat pesan.</p>
+          <div id="chat-conversation" style="display: none;">
+            <header id="chat-detail-header">
+              <button id="back-to-chats" type="button" aria-label="Kembali ke daftar chat">&lt;</button>
+              <span id="detail-avatar" class="chat-avatar"></span>
+              <div class="detail-contact">
+                <strong id="detail-name"></strong>
+                <small id="detail-number"></small>
+              </div>
+            </header>
+            <div id="message-list" role="log" aria-live="polite">
+              <p class="message-empty">Belum ada pesan di percakapan ini.</p>
+            </div>
+            <form id="message-form" class="message-composer">
+              <label class="visually-hidden" for="message-input">Tulis pesan</label>
+              <input id="message-input" type="text" dir="ltr" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="65536" placeholder="Ketik pesan" autocomplete="off" required>
+              <input id="photo-input" class="visually-hidden" type="file" accept="image/*">
+              <button id="photo-button" class="attachment-button" type="button" aria-label="Pilih foto untuk dikirim" title="Kirim foto">
+                <svg class="photo-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M9 3 7.2 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3H9zm3 14a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                </svg>
+              </button>
+              <button id="send-button" class="primary-button" type="submit" aria-label="Kirim pesan" title="Kirim pesan">
+                <svg class="send-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M2 21 23 12 2 3v7l15 2-15 2v7z"></path>
+                </svg>
+              </button>
+            </form>
+            <p id="send-status" class="send-status" role="status" aria-live="polite"></p>
+          </div>
+        </section>
+      </div>
+      <button id="logout-button" type="button">Keluar</button>
+    </section>
+  </main>
+
+  <script src="/theme.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/chat.js"></script>
+  <script src="/auth.js"></script>
+</body>
+</html>
